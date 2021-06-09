@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  /* margin-top: 30px; */
 }
 
 .App-logo {
@@ -14,18 +15,38 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: blue; */
+  background-image: url("https://images3.alphacoders.com/954/thumb-1920-954241.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
+}
+
+.App-body {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.button {
+  /* color: white; */
 }
 
 @keyframes App-logo-spin {

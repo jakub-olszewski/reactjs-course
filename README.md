@@ -1,8 +1,17 @@
+# setup plugins
+
+- React Playground
+- Preetier
+- Simple React Snippets
+
 # setup material-ui
 
-https://material-ui.com/
-
 npm install @material-ui/core
+npm install @material-ui/icons
+npm install @fontsource/roboto
+
+- more: https://material-ui.com/
+- youtube: https://www.youtube.com/watch?v=vyJU9efvUtQ
 
 # Getting Started with Create React App
 
