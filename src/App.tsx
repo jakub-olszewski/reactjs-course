@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Button from "@material-ui/core/Button";
@@ -25,6 +25,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import Slide from "@material-ui/core/Slide";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 
 // const useStyles = makeStyles({
 //   root:{
@@ -78,6 +82,7 @@ const theme = createMuiTheme({
       root: {
         background: "black",
         boxShadow: "none",
+        color: "white",
       },
       colorPrimary: {
         backgroundColor: "transparent",
@@ -87,7 +92,7 @@ const theme = createMuiTheme({
       root: {
         marginLeft: -12,
         marginRight: 5,
-        color: "blue",
+        color: "white",
       },
     },
   },
@@ -117,91 +122,146 @@ function CheckBoxExample() {
   );
 }
 
-function App() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  toolbarButtons: {
+    marginLeft: "auto",
+  },
+  appBarTransparent: {
+    backgroundColor: "transparent",
+  },
+  appBarSolid: {
+    backgroundColor: "rgba(67, 129, 168)",
+  },
+}));
+
+export default function App() {
+  const classes = useStyles();
+
+  const [navBackground, setNavBackground] = useState("appBarTransparent");
+  const navRef = React.useRef();
+  //navRef.current = navBackground;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const show = window.scrollY > 310;
+      if (show) {
+        setNavBackground("appBarSolid");
+      } else {
+        setNavBackground("appBarTransparent");
+      }
+    };
+    document.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="App" style={{ backgroundColor: "white" }}>
-        <header className="App-header">
-          <AppBar color="primary">
-            <Toolbar>
-              <IconButton>
-                <MenuIcon></MenuIcon>
-              </IconButton>
-              <h5>B24U</h5>
-              <Button>Login</Button>
-            </Toolbar>
-          </AppBar>
-        </header>
-        <body className="App-body">
-          <img src={logo} className="App-logo" alt="logo" />
-          <div style={{ padding: 20, width: "80%" }}>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item xs>
-                <Paper style={{ height: 175, minWidth: 150, width: "100%" }}>
-                  tekst 1
-                </Paper>
+      <div className={classes.root}>
+        <div className="App" style={{ backgroundColor: "white" }}>
+          <header className="App-header">
+            <AppBar position="fixed" className={classes[navRef.current]}>
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  // className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography
+                  variant="h6"
+                  // className={classes.title}
+                >
+                  B24U
+                </Typography>
+                <div className="App-menu-buttons">
+                  <Button color="inherit">Login</Button>
+                </div>
+              </Toolbar>
+            </AppBar>
+            <p>Lorem ipsum</p>
+          </header>
+          <body className="App-body">
+            <img src={logo} className="App-logo" alt="logo" />
+            <div style={{ padding: 20, width: "80%" }}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item xs>
+                  <Paper style={{ height: 175, minWidth: 150, width: "100%" }}>
+                    tekst 1
+                  </Paper>
+                </Grid>
+                <Grid item xs>
+                  <Paper style={{ height: 175, minWidth: 150, width: "100%" }}>
+                    tekst 2
+                  </Paper>
+                </Grid>
+                <Grid item xs>
+                  <Paper style={{ height: 175, minWidth: 150, width: "100%" }}>
+                    tekst 3
+                  </Paper>
+                </Grid>
               </Grid>
-              <Grid item xs>
-                <Paper style={{ height: 175, minWidth: 150, width: "100%" }}>
-                  tekst 2
-                </Paper>
-              </Grid>
-              <Grid item xs>
-                <Paper style={{ height: 175, minWidth: 150, width: "100%" }}>
-                  tekst 3
-                </Paper>
-              </Grid>
-            </Grid>
-          </div>
-          <TextField
-            variant="outlined"
-            color="secondary"
-            type="email"
-            label="Imię"
-            placeholder="Tutaj wpisz swoje imię"
-          />
-          <CheckBoxExample />
-          <ButtonGroup>
-            {/* <WhiteTextTypography> */}
-            <Button
-              startIcon={<SaveIcon />}
-              color="primary"
-              variant="contained"
-              size="small"
+            </div>
+            <TextField
+              variant="outlined"
+              color="secondary"
+              type="email"
+              label="Imię"
+              placeholder="Tutaj wpisz swoje imię"
+            />
+            <CheckBoxExample />
+            <ButtonGroup>
+              {/* <WhiteTextTypography> */}
+              <Button
+                startIcon={<SaveIcon />}
+                color="primary"
+                variant="contained"
+                size="small"
+              >
+                Zapisz
+              </Button>
+              <Button
+                startIcon={<CancelIcon />}
+                // color="secondary"
+                variant="contained"
+                size="small"
+              >
+                Anuluj
+              </Button>
+              {/* </WhiteTextTypography> */}
+            </ButtonGroup>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <a
+              className="App-link"
+              href="https://reactjs.org"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Zapisz
-            </Button>
-            <Button
-              startIcon={<CancelIcon />}
-              // color="secondary"
-              variant="contained"
-              size="small"
-            >
-              Anuluj
-            </Button>
-            {/* </WhiteTextTypography> */}
-          </ButtonGroup>
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </body>
+              Learn React
+            </a>
+          </body>
+        </div>
       </div>
     </ThemeProvider>
   );
 }
-
-export default App;
